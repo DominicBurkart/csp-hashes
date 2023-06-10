@@ -1,0 +1,13 @@
+[package]
+name = "csp-hashes"
+version = "0.0.1"
+edition = "2021"
+authors = ["Dominic <code@dominic.computer>"]
+description = "Utility for hashing scripts while creating a Content Security Policy (CSP)"
+license = "Apache-2.0 OR MIT"
+repository = "https://github.com/DominicBurkart/csp-hashes"
+
+[dependencies]
+base64 = "0.21.2"
+scraper = "0.16.0"
+sha2 = "0.10.6"
