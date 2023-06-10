@@ -4,7 +4,7 @@ CSP-hashes is a utility for hashing scripts while creating a <a href="https://de
 
 ## Usage
 ```
-let hashes = csp_hashes_from_html_document(
+let hashes = csp_hashes::csp_hashes_from_html_document(
     r#"<!doctype html>
     <html>
         <head>
