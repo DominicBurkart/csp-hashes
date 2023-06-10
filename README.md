@@ -15,5 +15,6 @@ let hashes = csp_hashes::csp_hashes_from_html_document(
             <script>console.log("in body")</script>
         </body>
     </html>"#
-); // {"sha384-8wiu0e3/t6a55K7REGqooaRsccJwaR4CH2UgjuPia5OjmnWavbRbuAk4NL+WJ07o", "sha384-DSCsjoY4lRFgW2ltWTCEhMG+WSglTblYcvUcCd/X4ua88hLymWLjdMdNAEXJF1R9"}
+); // {"sha384-8wiu0e3/t6a55K7REGqooaRsccJwaR4CH2UgjuPia5OjmnWavbRbuAk4NL+WJ07o", 
+"sha384-DSCsjoY4lRFgW2ltWTCEhMG+WSglTblYcvUcCd/X4ua88hLymWLjdMdNAEXJF1R9"}
 ```
