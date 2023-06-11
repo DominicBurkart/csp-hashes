@@ -1,6 +1,6 @@
 [package]
 name = "csp-hashes"
-version = "0.0.3"
+version = "0.0.4"
 edition = "2021"
 authors = ["Dominic <code@dominic.computer>"]
 description = "CSP-hashes hashes inline script and style HTML elements for generating a Content Security Policy (CSP)"

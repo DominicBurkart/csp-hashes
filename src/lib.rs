@@ -2,9 +2,9 @@ use std::collections::HashSet;
 
 use base64::{engine::general_purpose, Engine};
 use scraper::{Html, Selector};
-use sha2::{Digest, Sha384};
+use sha2::{Digest, Sha256};
 
-/// Hashes inline <script> and <style> elements using SHA384. Returns an error if input is not a valid HTML document.
+/// Hashes inline <script> and <style> elements using SHA256. Returns an error if input is not a valid HTML document.
 pub fn csp_hashes_from_html_document(html: &str) -> Result<HashSet<String>, String> {
     let doc = Html::parse_document(html);
 
@@ -13,22 +13,22 @@ pub fn csp_hashes_from_html_document(html: &str) -> Result<HashSet<String>, Stri
     let mut hashes = doc
         .select(&script)
         .map(|s| {
-            let mut hasher = Sha384::new();
+            let mut hasher = Sha256::new();
             hasher.update(s.inner_html().as_bytes());
             let hash = hasher.finalize();
             let b64 = general_purpose::STANDARD.encode(hash);
-            format!("sha384-{b64}")
+            format!("sha256-{b64}")
         })
         .collect::<HashSet<String>>();
 
     // style elements
     let style = Selector::parse("style").expect("could not instantiate script selector");
     hashes.extend(doc.select(&style).map(|s| {
-        let mut hasher = Sha384::new();
+        let mut hasher = Sha256::new();
         hasher.update(s.inner_html().as_bytes());
         let hash = hasher.finalize();
         let b64 = general_purpose::STANDARD.encode(hash);
-        format!("sha384-{b64}")
+        format!("sha256-{b64}")
     }));
 
     if let Some(error) = doc.errors.first() {
@@ -68,10 +68,8 @@ mod tests {
             )
             .unwrap(),
             HashSet::from_iter(vec![
-                "sha384-DSCsjoY4lRFgW2ltWTCEhMG+WSglTblYcvUcCd/X4ua88hLymWLjdMdNAEXJF1R9"
-                    .to_string(),
-                "sha384-8wiu0e3/t6a55K7REGqooaRsccJwaR4CH2UgjuPia5OjmnWavbRbuAk4NL+WJ07o"
-                    .to_string()
+                "sha256-vjwjwnBndhWG+ZN6vpRKSmbicObZIQarx7RgSb3DmA8=".to_string(),
+                "sha256-3oUpClVK/cNQB5x9TStM+xLiHETuIGGp2vGZRQdvHX0=".to_string()
             ])
         );
     }
@@ -123,8 +121,7 @@ mod tests {
             )
             .unwrap(),
             HashSet::from_iter(vec![
-                "sha384-q+dup7GU5E/f0Nb7a1Xj1WIe0Yhtb8iQInMzw5FsuSlkFlHlChWN+ilLp31g0KcO"
-                    .to_string()
+                "sha256-4+QNL+2odf47+35bV9by29lQ0daJMNTQRSLy7iRe3uI=".to_string()
             ])
         );
     }
@@ -152,14 +149,10 @@ mod tests {
             )
             .unwrap(),
             HashSet::from_iter(vec![
-                "sha384-8wiu0e3/t6a55K7REGqooaRsccJwaR4CH2UgjuPia5OjmnWavbRbuAk4NL+WJ07o"
-                    .to_string(),
-                "sha384-C7jzVbBinKn9p8VBEKL6WcWsyXYGsmCarWuDFiMixfXddogCKz0EY0Ke4J8AtarG"
-                    .to_string(),
-                "sha384-DSCsjoY4lRFgW2ltWTCEhMG+WSglTblYcvUcCd/X4ua88hLymWLjdMdNAEXJF1R9"
-                    .to_string(),
-                "sha384-q+dup7GU5E/f0Nb7a1Xj1WIe0Yhtb8iQInMzw5FsuSlkFlHlChWN+ilLp31g0KcO"
-                    .to_string()
+                "sha256-4+QNL+2odf47+35bV9by29lQ0daJMNTQRSLy7iRe3uI=".to_string(),
+                "sha256-3oUpClVK/cNQB5x9TStM+xLiHETuIGGp2vGZRQdvHX0=".to_string(),
+                "sha256-vjwjwnBndhWG+ZN6vpRKSmbicObZIQarx7RgSb3DmA8=".to_string(),
+                "sha256-n1Yam9K1WJihP5yKcNNfCE/P1LaxJQmuUucwWsXrHWg=".to_string()
             ])
         );
     }
