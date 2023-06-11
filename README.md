@@ -1,6 +1,6 @@
 # CSP-hashes
 
-CSP-hashes is a utility for hashing scripts while creating a <a href="https://developer.mozilla.org/docs/Web/HTTP/CSP">Content Security Policy (CSP)</a>.
+CSP-hashes hashes inline script and style HTML elements for generating a <a href="https://developer.mozilla.org/docs/Web/HTTP/CSP">Content Security Policy (CSP)</a>.
 
 ## Usage
 ```
